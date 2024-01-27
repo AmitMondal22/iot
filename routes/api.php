@@ -53,8 +53,10 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
 });
 
 
-Route::prefix('iot')->group(function () {
-    Route::get('/add-device', [IotDeviceController::class, 'add_device']);
-    Route::get('/add-device-data', [IotDeviceDataController::class,'add_device_data']);
+Route::middleware(['api-access'])->group(function () {
+    Route::prefix('iot')->group(function () {
+        Route::get('/add-device', [IotDeviceController::class, 'add_device']);
+        Route::get('/checked-device', [IotDeviceController::class, 'checked_device']);
+        Route::get('/add-device-data', [IotDeviceDataController::class, 'add_device_data']);
+    });
 });
-

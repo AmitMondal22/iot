@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponceFormat;
 use App\Models\DeviceData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class DeviceDataController extends Controller
+class DeviceDataController extends ResponceFormat
 {
     public function device_data_list(Request $r){
         try {
