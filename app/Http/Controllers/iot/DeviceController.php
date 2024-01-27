@@ -45,6 +45,7 @@ class DeviceController extends ResponceFormat
             }
 
 
+
             $find_device = MdDevice::where("device_name",$r->device_name)->first();
             if(!empty($find_device)){
                 return $this->sendResponse($find_device, "device is already exists");
