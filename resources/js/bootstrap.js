@@ -27,6 +27,6 @@ window.Echo = new Echo({
     // forceTLS: true
     forceTLS: false,
     wsHost: window.location.hostname,
-    wsPort:6001,//soketPort
+    wsPort:process.env.WEBSOCKETS,//soketPort
     disableStats:true
 });

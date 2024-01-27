@@ -40,7 +40,7 @@ return [
                 'useTLS' => true,       //localhost
                 //'encrypted'=>true,    //live server
                 'host'=>'127.0.0.1',    //my localhost ip OR live server domainname
-                'port'=>6001,           //LARAVEL_WEBSOCKETS_PORT', 6001   is WEBSOCKET port
+                'port'=>env('WEBSOCKETS'),           //LARAVEL_WEBSOCKETS_PORT', 6001   is WEBSOCKET port
                 'schema'=>'http'        //localhost 'http' OR live Server 'https'
 
             ],
