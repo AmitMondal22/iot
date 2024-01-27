@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\DeviceController;
+use App\Http\Controllers\admin\DeviceDataController;
+use App\Http\Controllers\iot\DeviceController as IotDeviceController;
+use App\Http\Controllers\iot\DeviceDataController as IotDeviceDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +41,20 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
         Route::get('/user', [AuthController::class, 'test']);
         Route::get('/user2', [AuthController::class, 'test']);
     });
+
+    Route::prefix('device')->group(function () {
+        Route::get('/list', [DeviceController::class, 'device_list']);
+    });
+
+    Route::prefix('device-data')->group(function () {
+        Route::post('/list', [DeviceDataController::class, 'device_data_list']);
+        Route::post('/last', [DeviceDataController::class, 'last_device_data']);
+    });
 });
 
+
+Route::prefix('iot')->group(function () {
+    Route::get('/add-device', [IotDeviceController::class, 'add_device']);
+    Route::get('/add-device-data', [IotDeviceDataController::class,'add_device_data']);
+});
 
