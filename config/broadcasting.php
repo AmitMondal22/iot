@@ -38,10 +38,12 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'useTLS' => true,       //localhost
-                //'encrypted'=>true,    //live server
-                'host'=>'127.0.0.1',    //my localhost ip OR live server domainname
+                'encrypted'=>true,    //live server
+                // 'host'=>'127.0.0.1',    //my localhost ip OR live server domainname
+                'host'=>'iot.wrongcode.in',    //my localhost ip OR live server domainname
                 'port'=>env('WEBSOCKETS'),           //LARAVEL_WEBSOCKETS_PORT', 6001   is WEBSOCKET port
-                'schema'=>'http'        //localhost 'http' OR live Server 'https'
+                'schema'=>'https'        //localhost 'http' OR live Server 'https'
+                // 'schema'=>'http'        //localhost 'http' OR live Server 'https'
 
             ],
         ],
