@@ -23,12 +23,10 @@ class DeviceDataController extends ResponceFormat
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
 
-            $fdate=date('Y-m-d',$r->start_date_time);
-            $tdate=date('Y-m-d',$r->end_date_time);
-            $ftime=date('H:i:s',$r->start_date_time);
-            $ttime=date('H:i:s',$r->end_date_time);
+            $fdate=$r->start_date_time;
+            $tdate=$r->end_date_time;
 
-            $device_data_list = DeviceData::where("device_id",$r->device_id)->whereBetween("date",[$fdate,$tdate])->whereBetween("time",[$ftime,$ttime])->get();
+            $device_data_list = DeviceData::where("device_id",$r->device_id)->whereBetween("date",[$fdate,$tdate])->get();
             return $this->sendResponse($device_data_list, "device data list");
         } catch (\Throwable $th) {
             return $this->sendError("device data list", $th->getMessage());
