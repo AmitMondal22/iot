@@ -10,5 +10,5 @@ class MdDevice extends Model
     use HasFactory;
     protected $table = 'md_device';
     protected $primaryKey = 'device_id';
-    protected $fillable = [ "device_name"];
+    protected $fillable = [ "imei_no","device_name"];
 }
