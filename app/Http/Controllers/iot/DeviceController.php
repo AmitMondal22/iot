@@ -31,6 +31,7 @@ class DeviceController extends ResponceFormat
                 "imei_no"=>$r->imei_no,
                 "device_name" => $r->device_name
             ]);
+            
             return $this->sendResponse($device_list, "device list");
         } catch (\Throwable $th) {
             return $this->sendError("device list", $th->getMessage());
