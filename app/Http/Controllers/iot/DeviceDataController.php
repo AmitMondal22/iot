@@ -20,7 +20,7 @@ class DeviceDataController extends ResponceFormat
                 'settings_freq' => 'required',
                 'running_freq' => 'required',
                 'rpm' => 'required',
-                'flow' => 'required',
+                // 'flow' => 'required',
             ];
 
             $valaditor = Validator::make($r->all(), $rules);
@@ -38,7 +38,7 @@ class DeviceDataController extends ResponceFormat
                 "settings_freq" => $r->settings_freq,
                 "running_freq" => $r->running_freq,
                 "rpm" => $r->rpm,
-                "flow" => $r->flow,
+                "flow" => 0,
             ]);
             return $this->sendResponse($add_device_data, "add device data");
         } catch (\Throwable $th) {
