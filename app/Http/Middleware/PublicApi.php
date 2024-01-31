@@ -16,10 +16,10 @@ class PublicApi
      */
     public function handle(Request $request, Closure $next)
     {
-        // $authorizationHeader = $request->header('Authorization');
-        // if ($authorizationHeader !== 'A6567B2FC2755BCB1DBA78CB3ED1F') {
-        //     return response()->json(['error' => 'Unauthorized'], 401);
-        // }
+        $authorizationHeader = $request->header('Authorization');
+        if ($authorizationHeader !== 'A6567B2FC2755BCB1DBA78CB3ED1F') {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
         return $next($request);
     }
 }
