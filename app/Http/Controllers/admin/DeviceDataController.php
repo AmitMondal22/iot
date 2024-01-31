@@ -45,7 +45,15 @@ class DeviceDataController extends ResponceFormat
             }
 
             $device_data_list = DeviceData::where("device_id",$r->device_id)->orderBy("id","desc")->first();
-            return $this->sendResponse($device_data_list, "last device data");
+
+
+            $chart=DeviceData::where("device_id",$r->device_id)->orderBy("id","desc")->orderBy("data_id", "desc")
+            ->take(5)->get();
+            $data=[
+                "device_data_list"=>$device_data_list,
+                "chart_data_list"=>$chart
+            ];
+            return $this->sendResponse($data, "last device data");
         } catch (\Throwable $th) {
             return $this->sendError("last device data", $th->getMessage());
         }
