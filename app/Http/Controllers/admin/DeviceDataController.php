@@ -44,7 +44,7 @@ class DeviceDataController extends ResponceFormat
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
 
-            $device_data_list = DeviceData::where("device_id",$r->device_id)->orderBy("id","desc")->first();
+            $device_data_list = DeviceData::where("device_id",$r->device_id)->orderBy("data_id","desc")->first();
             $chart=DeviceData::where("device_id",$r->device_id)->orderBy("device_id","desc")->orderBy("data_id", "desc")
             ->take(5)->get();
             $data=[
