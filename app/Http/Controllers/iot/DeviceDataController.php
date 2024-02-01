@@ -28,6 +28,10 @@ class DeviceDataController extends ResponceFormat
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
 
+            // flow=(100*MaxRpm)/liveRPM
+            // 0 to 2800 rpm
+            // 0-100% flow
+                $flow=round((100*2800)/$r->rpm, 2);
 
             $add_device_data = DeviceData::create([
                 "device_id" => $r->device_id,
@@ -38,7 +42,7 @@ class DeviceDataController extends ResponceFormat
                 "settings_freq" => $r->settings_freq,
                 "running_freq" => $r->running_freq,
                 "rpm" => $r->rpm,
-                "flow" => 0,
+                "flow" => $flow,
             ]);
             return $this->sendResponse($add_device_data, "add device data");
         } catch (\Throwable $th) {
