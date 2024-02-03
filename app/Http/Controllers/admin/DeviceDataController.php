@@ -45,7 +45,8 @@ class DeviceDataController extends ResponceFormat
             }
 
             $device_data_list = DeviceData::where("device_id",$r->device_id)->orderBy("data_id","desc")->first();
-            $chart=DeviceData::where("device_id",$r->device_id)->orderBy("device_id","desc")->orderBy("data_id", "desc")
+            // $chart=DeviceData::where("device_id",$r->device_id)->orderBy("device_id","desc")->orderBy("data_id", "desc")
+            $chart=DeviceData::where("device_id",$r->device_id)->orderBy("data_id", "desc")
             ->take(5)->get();
             $data=[
                 "device_data_list"=>$device_data_list,
