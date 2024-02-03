@@ -31,7 +31,7 @@ class DeviceDataController extends ResponceFormat
             // flow=(100*MaxRpm)/liveRPM
             // 0 to 2800 rpm
             // 0-100% flow
-                $flow=round((100*2800)/$r->rpm, 2);
+                $flow=round((100*$r->rpm)/2800, 2);
 
             $add_device_data = DeviceData::create([
                 "device_id" => $r->device_id,
