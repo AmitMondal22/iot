@@ -26,7 +26,7 @@ class DeviceDataController extends ResponceFormat
             $fdate=$r->start_date_time;
             $tdate=$r->end_date_time;
 
-            $device_data_list = DeviceData::where("device_id",$r->device_id)->whereBetween("date",[$fdate,$tdate])->get();
+            $device_data_list = DeviceData::where("device_id",$r->device_id)->whereBetween("date",[$fdate,$tdate])->orderBy("data_id","DESC")->get();
             return $this->sendResponse($device_data_list, "device data list");
         } catch (\Throwable $th) {
             return $this->sendError("device data list", $th->getMessage());
