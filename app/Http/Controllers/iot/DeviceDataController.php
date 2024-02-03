@@ -20,6 +20,7 @@ class DeviceDataController extends ResponceFormat
                 'settings_freq' => 'required',
                 'running_freq' => 'required',
                 'rpm' => 'required',
+                'run_hours' => 'required',
                 // 'flow' => 'required',
             ];
 
@@ -36,7 +37,7 @@ class DeviceDataController extends ResponceFormat
             $add_device_data = DeviceData::create([
                 "device_id" => $r->device_id,
                 "date" => date("Y-m-d"),
-                "time" => date("H:i:s"),
+                "time" => $r->run_hours,
                 "dc_bus_voltage" => $r->dc_bus_voltage,
                 "output_current" => $r->output_current,
                 "settings_freq" => $r->settings_freq,
