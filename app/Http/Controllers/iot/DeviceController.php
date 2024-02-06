@@ -23,19 +23,49 @@ class DeviceController extends ResponceFormat
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
 
-            $find_device = MdDevice::where("device_name", $r->device_name)->first();
+            $find_device = MdDevice::where("imei_no", $r->imei_no)->first();
             if (!empty($find_device)) {
                 return $this->sendError("device already exist");
             }
-            $device_list = MdDevice::create([
-                "imei_no"=>$r->imei_no,
-                "device_name" => $r->device_name
-            ]);
-            
-            return $this->sendResponse($device_list, "device list");
+
+            $device_name = MdDevice::latest()->first();
+            if(!empty($device_name->device_name)){
+                $u_id = $this->decrementString($device_name->device_name);
+            }else{
+                $u_id =$r->device_name;
+                MdDevice::create([
+                    "imei_no"=>$r->imei_no,
+                    "device_name" => $u_id
+                ]);
+            }
+
+
+
+            return $this->sendResponse(["u_id"=>$u_id], "device list");
         } catch (\Throwable $th) {
             return $this->sendError("device list", $th->getMessage());
         }
+    }
+
+
+
+    function decrementString($str) {
+        // Extract non-numeric part
+        $nonNumericPart = preg_replace('/[0-9]+/', '', $str);
+
+        // Extract numeric part
+        preg_match('/[0-9]+$/', $str, $matches);
+        $numericPart = isset($matches[0]) ? $matches[0] : '';
+
+        $newNumericPart = ($numericPart === '') ? 0 : intval($numericPart) + 1;
+
+        if ($newNumericPart < 0) {
+            $newNumericPart = 0;
+        }
+
+        // Pad the numeric part with leading zeros to maintain the same length
+        $paddedNumericPart = str_pad($newNumericPart, strlen($numericPart), '0', STR_PAD_LEFT);
+        return $nonNumericPart . $paddedNumericPart;
     }
 
     public function checked_device(Request $r)
