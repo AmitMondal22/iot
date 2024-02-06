@@ -31,6 +31,10 @@ class DeviceController extends ResponceFormat
             $device_name = MdDevice::latest()->first();
             if(!empty($device_name->device_name)){
                 $u_id = $this->decrementString($device_name->device_name);
+                MdDevice::create([
+                    "imei_no"=>$r->imei_no,
+                    "device_name" => $u_id
+                ]);
             }else{
                 $u_id =$r->device_name;
                 MdDevice::create([
