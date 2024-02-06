@@ -22,6 +22,15 @@ class DeviceController extends ResponceFormat
             if ($valaditor->fails()) {
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
+
+
+
+            $find_device = MdDevice::where("imei_no", $r->imei_no)->first();
+            if (!empty($find_device)) {
+                $device_name = MdDevice::latest()->first();
+                return $this->sendError("device already exist",["u_id"=>$find_device->device_name]);
+            }
+
             $device_name = MdDevice::latest()->first();
             if(!empty($device_name->device_name)){
                 $u_id = $this->decrementString($device_name->device_name);
@@ -30,14 +39,6 @@ class DeviceController extends ResponceFormat
                 $u_id ="TS00000001";
 
             }
-
-
-            $find_device = MdDevice::where("imei_no", $r->imei_no)->first();
-            if (!empty($find_device)) {
-                return $this->sendError("device already exist",["u_id"=>$u_id]);
-            }
-
-
 
             MdDevice::create([
                 "imei_no"=>$r->imei_no,
