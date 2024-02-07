@@ -19,6 +19,25 @@ class ResponceFormat extends Controller
         return response()->json($response, 200);
     }
 
+
+    public function sendResponseIot($result = [], $message): JsonResponse
+    {
+        $response = [
+            'success' => true,
+            // 'data'    => $result,
+            'message' => $message,
+        ];
+
+        if (!empty($result) && is_array($result)) {
+            foreach ($result as $key => $value) {
+                $response[$key] = $value;
+            }
+        }
+
+
+        return response()->json($response, 200);
+    }
+
     public function sendError($error, $errorMessages = [], $code = 404): JsonResponse
     {
         $response = [
@@ -34,8 +53,25 @@ class ResponceFormat extends Controller
 
         return response()->json($response, $code);
     }
+    public function sendErrorIot($error = [], $errorMessages = [], $code = 404): JsonResponse
+    {
+        $response = [
+            'success' => false,
+            'message' => $error,
+        ];
 
-    public function getUserType($userType):int
+
+        if (!empty($errorMessages) && is_array($errorMessages)) {
+            foreach ($errorMessages as $key => $value) {
+                $response[$key] = $value;
+            }
+        }
+
+
+        return response()->json($response, $code);
+    }
+
+    public function getUserType($userType): int
     {
         $userRoles = ["admin", "user1", "user2", "user3", "user4"];
 

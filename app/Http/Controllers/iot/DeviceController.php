@@ -20,7 +20,7 @@ class DeviceController extends ResponceFormat
 
             $valaditor = Validator::make($r->all(), $rules);
             if ($valaditor->fails()) {
-                return $this->sendError("request validation error", $valaditor->errors(), 400);
+                return $this->sendErrorIot("request validation error", $valaditor->errors(), 400);
             }
 
 
@@ -28,7 +28,7 @@ class DeviceController extends ResponceFormat
             $find_device = MdDevice::where("imei_no", $r->imei_no)->first();
             if (!empty($find_device)) {
                 $device_name = MdDevice::latest()->first();
-                return $this->sendError("device already exist",["u_id"=>$find_device->device_name]);
+                return $this->sendErrorIot("device already exist",["u_id"=>$find_device->device_name]);
             }
 
             $device_name = MdDevice::latest()->first();
@@ -46,9 +46,9 @@ class DeviceController extends ResponceFormat
             ]);
 
 
-            return $this->sendResponse(["u_id"=>$u_id], "device list");
+            return $this->sendResponseIot(["u_id"=>$u_id], "device list");
         } catch (\Throwable $th) {
-            return $this->sendError("device list", $th->getMessage());
+            return $this->sendErrorIot("device list", $th->getMessage());
         }
     }
 
@@ -83,18 +83,18 @@ class DeviceController extends ResponceFormat
 
             $valaditor = Validator::make($r->all(), $rules);
             if ($valaditor->fails()) {
-                return $this->sendError("request validation error", $valaditor->errors(), 400);
+                return $this->sendErrorIot("request validation error", $valaditor->errors(), 400);
             }
 
 
 
             $find_device = MdDevice::where("device_name", $r->device_name)->first();
             if (!empty($find_device)) {
-                return $this->sendResponse($find_device, "device is already exists");
+                return $this->sendResponseIot($find_device, "device is already exists");
             }
-            return $this->sendResponse('', "device not found");
+            return $this->sendResponseIot('', "device not found");
         } catch (\Throwable $th) {
-            return $this->sendError("device list", $th->getMessage());
+            return $this->sendErrorIot("device list", $th->getMessage());
         }
     }
 }
