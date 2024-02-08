@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
         Route::post('/last', [DeviceDataController::class, 'last_device_data']);
     });
     Route::prefix('master')->group(function () {
-        Route::get('/add-origination', [OriginationController::class, 'add_origination']);
+        Route::post('/add-origination', [OriginationController::class, 'add_origination']);
     });
 });
 
