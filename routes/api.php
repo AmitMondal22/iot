@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\DeviceController;
 use App\Http\Controllers\admin\DeviceDataController;
+use App\Http\Controllers\admin\OriginationController;
 use App\Http\Controllers\iot\DeviceController as IotDeviceController;
 use App\Http\Controllers\iot\DeviceDataController as IotDeviceDataController;
 use Illuminate\Http\Request;
@@ -49,6 +50,9 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
     Route::prefix('device-data')->group(function () {
         Route::post('/list', [DeviceDataController::class, 'device_data_list']);
         Route::post('/last', [DeviceDataController::class, 'last_device_data']);
+    });
+    Route::prefix('master')->group(function () {
+        Route::get('/add-origination', [OriginationController::class, 'add_origination']);
     });
 });
 
