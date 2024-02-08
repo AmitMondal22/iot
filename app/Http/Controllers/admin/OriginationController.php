@@ -65,4 +65,14 @@ class OriginationController extends ResponceFormat
             return $this->sendError("device data list", $th->getMessage());
         }
     }
+
+
+    function list_origination(Request $r){
+        try {
+            $origination = MdOrigination::get();
+            return $this->sendResponse($origination, "origination list");
+        } catch (\Throwable $th) {
+            return $this->sendError("device data list", $th->getMessage());
+        }
+    }
 }
