@@ -56,6 +56,10 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
         Route::post('/edit-origination', [OriginationController::class, 'edit_origination']);
         Route::post('/delete-origination', [OriginationController::class, 'delete_origination']);
         Route::get('/list-origination', [OriginationController::class, 'list_origination']);
+
+        Route::post('/add-user', [AuthController::class, 'add_user']);
+        Route::post('/edit-user', [AuthController::class, 'edit_user']);
+        Route::get('/list-user', [AuthController::class, 'list_user']);
     });
 });
 
