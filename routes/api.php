@@ -53,6 +53,8 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
     });
     Route::prefix('master')->group(function () {
         Route::post('/add-origination', [OriginationController::class, 'add_origination']);
+        Route::post('/edit-origination', [OriginationController::class, 'edit_origination']);
+        Route::post('/delete-origination', [OriginationController::class, 'delete_origination']);
     });
 });
 

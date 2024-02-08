@@ -29,4 +29,40 @@ class OriginationController extends ResponceFormat
             return $this->sendError("device data list", $th->getMessage());
         }
     }
+
+    function edit_origination(Request $r){
+        try {
+            $rules = [
+                'origination_id' => 'required',
+                'origination_name' => 'required'
+            ];
+            $valaditor = Validator::make($r->all(), $rules);
+            if ($valaditor->fails()) {
+                return $this->sendError("request validation error", $valaditor->errors(), 400);
+            }
+            $origination = MdOrigination::where("origination_id",$r->origination_id)->update([
+                "origination_name"=>$r->origination_name,
+                "create_by"=>auth()->user()->id
+            ]);
+            return $this->sendResponse($origination, "origination updated");
+        } catch (\Throwable $th) {
+            return $this->sendError("device data list", $th->getMessage());
+        }
+    }
+
+    function delete_origination(Request $r){
+        try {
+            $rules = [
+                'origination_id' => 'required'
+            ];
+            $valaditor = Validator::make($r->all(), $rules);
+            if ($valaditor->fails()) {
+                return $this->sendError("request validation error", $valaditor->errors(), 400);
+            }
+            $origination = MdOrigination::where("origination_id",$r->origination_id)->delete();
+            return $this->sendResponse($origination, "origination deleted");
+        } catch (\Throwable $th) {
+            return $this->sendError("device data list", $th->getMessage());
+        }
+    }
 }
