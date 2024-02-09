@@ -61,6 +61,26 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
         Route::post('/edit-user', [AuthController::class, 'edit_user']);
         Route::get('/list-user', [AuthController::class, 'list_user']);
     });
+
+    Route::prefix('assign-device')->group(function () {
+        Route::post('/add-origination',[OriginationController::class, 'assign_origination']);
+        Route::post('/edit-origination',[OriginationController::class, 'edit_assign_origination']);
+        Route::get('/list-origination',[OriginationController::class, 'list_assign_origination']);
+    });
+});
+
+
+
+Route::middleware(['auth:sanctum', 'user-access:1'])->group(function () {
+    Route::prefix('device')->group(function () {
+        Route::get('/list', [DeviceController::class, 'device_list_user']);
+    });
+
+    Route::prefix('device-data')->group(function () {
+        Route::post('/list', [DeviceDataController::class, 'device_data_list_user']);
+        Route::post('/last', [DeviceDataController::class, 'last_device_data_user']);
+    });
+
 });
 
 
