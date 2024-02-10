@@ -72,19 +72,29 @@ class AuthController extends ResponceFormat
                 'name' => 'required',
                 'email' => 'required|email',
                 'origination_id' => 'required|numeric',
-                'password' => 'required',
+                'password' => 'nullable',
             ];
             $valaditor = Validator::make($r->all(), $rules);
             if ($valaditor->fails()) {
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
-            $password = Hash::make($r->password);
-            User::where("id", $r->user_id)->update([
-                "name" => $r->name,
-                "email" => $r->email,
-                "origination_id" => $r->origination_id,
-                "password" => $password
-            ]);
+            if($r->password){
+                $password = Hash::make($r->password);
+                User::where("id", $r->user_id)->update([
+                    "name" => $r->name,
+                    "email" => $r->email,
+                    "origination_id" => $r->origination_id,
+                    "password" => $password
+                ]);
+            }else{
+                User::where("id", $r->user_id)->update([
+                    "name" => $r->name,
+                    "email" => $r->email,
+                    "origination_id" => $r->origination_id
+                ]);
+            }
+
+
             return $this->sendResponse("register", "register");
         } catch (\Throwable $th) {
             return $this->sendError("register", $th->getMessage());
