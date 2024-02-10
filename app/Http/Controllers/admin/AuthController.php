@@ -94,7 +94,7 @@ class AuthController extends ResponceFormat
     function list_user(Request $r): JsonResponse
     {
         try {
-            $user = User::join("md_origination as a", 'users.origination_id', '=', 'a.origination_id')->where("users.user_type", '1')->select("users.*", "a.origination_name", "a.active_status")->get();
+            $user = User::join("md_origination as a", 'users.origination_id', '=', 'a.origination_id')->where("users.user_type", '1')->select("users.*", "a.origination_name", "a.active_status")->toSql();
             return $this->sendResponse($user, "user list");
         } catch (\Throwable $th) {
             return $this->sendError("user list", $th->getMessage());
