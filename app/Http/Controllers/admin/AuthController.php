@@ -54,7 +54,7 @@ class AuthController extends ResponceFormat
                 "name" => $r->name,
                 "email" => $r->email,
                 "password" => Hash::make($r->password),
-                "user_type" => 1,
+                "user_type" => '1',
                 "origination_id" => $r->origination_id
             ]);
             return $this->sendResponse("register", "register");
@@ -94,7 +94,7 @@ class AuthController extends ResponceFormat
     function list_user(Request $r): JsonResponse
     {
         try {
-            $user = User::join("md_origination as a", 'users.origination_id', '=', 'a.origination_id')->where("users.user_type", '1')->select("users.*", "a.origination_name", "a.active_status")->toSql();
+            $user = User::join("md_origination as a", 'users.origination_id', '=', 'a.origination_id')->where("users.user_type", '1')->select("users.*", "a.origination_name", "a.active_status")->get();
             return $this->sendResponse($user, "user list");
         } catch (\Throwable $th) {
             return $this->sendError("user list", $th->getMessage());
