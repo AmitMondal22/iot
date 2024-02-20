@@ -94,9 +94,17 @@ class DeviceDataController extends ResponceFormat
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
 
-            $device_data_list = DeviceData::join("td_assign_device as a","md_device.device_id","=","a.device_id")->where("a.origination_id",auth()->user()->origination_id)->where("md_device.device_id",$r->device_id)->orderBy("md_device.data_id","desc")->first();
+            $device_data_list = DeviceData::join("td_assign_device as a","td_device_data.device_name", "=", "a.device_id")->join("md_device as b","td_device_data.device_name", "=", "a.device_id")->where("a.origination_id",auth()->user()->origination_id)->where("td_device_data.device_id",$r->device_id)->orderBy("td_device_data.data_id","desc")->first();
             // $chart=DeviceData::where("device_id",$r->device_id)->orderBy("device_id","desc")->orderBy("data_id", "desc")
-            $chart=DeviceData::join("td_assign_device as a","md_device.device_id","=","a.device_id")->where("a.origination_id",auth()->user()->origination_id)->where("md_device.device_id",$r->device_id)->orderBy("md_device.data_id", "desc")
+
+//             "select td_device_data.*
+// from td_device_data
+// inner join md_device as b on td_device_data.device_name = a.device_id
+// inner join td_assign_device as a on a.device_id = b.device_id
+// where a.origination_id = 2
+// and td_device_data.device_id = 'ABCDE01001'
+// order by td_device_data.data_id desc limit 1"
+            $chart=DeviceData::join("td_assign_device as a","td_device_data.device_name", "=", "a.device_id")->join("md_device as b","td_device_data.device_name", "=", "a.device_id")->where("a.origination_id",auth()->user()->origination_id)->where("td_device_data.device_id",$r->device_id)->orderBy("td_device_data.data_id","desc")
             ->take(5)->get();
             $data=[
                 "device_data_list"=>$device_data_list,
