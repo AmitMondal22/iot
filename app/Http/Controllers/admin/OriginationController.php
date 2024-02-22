@@ -179,15 +179,15 @@ class OriginationController extends ResponceFormat
     function list_origination_to_device(Request $r)
     {
 
-        // try {
+        try {
             // $origination = MdOrigination::get();
             // $assignDevices =  $origination->assign_devices()->with('device')->get();
 
             $originations = MdOrigination::with('assign_devices.device')->get();
             return $this->sendResponse($originations, "origination list");
             // return $this->sendResponse($assignDevices, "origination list");
-        // } catch (\Throwable $th) {
-        //     return $this->sendError("device data list", $th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            return $this->sendError("device data list", $th->getMessage());
+        }
     }
 }
