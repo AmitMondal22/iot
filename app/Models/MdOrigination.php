@@ -11,4 +11,10 @@ class MdOrigination extends Model
     protected $table = 'md_origination';
     protected $primaryKey = 'origination_id';
     protected $fillable = [ "origination_name","active_status","create_by"];
+
+
+    public function assign_devices()
+    {
+        return $this->hasMany(TdAssignDevice::class, 'origination_id', 'origination_id');
+    }
 }
