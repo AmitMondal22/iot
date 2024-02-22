@@ -104,6 +104,41 @@ class OriginationController extends ResponceFormat
         }
     }
 
+    function assign_multiple_origination(Request $r)
+    {
+        try {
+            $rules = [
+                'organization_id' => 'required',
+                'all_device' => 'required'
+            ];
+            $valaditor = Validator::make($r->all(), $rules);
+            if ($valaditor->fails()) {
+                return $this->sendError("request validation error", $valaditor->errors(), 400);
+            }
+            $successCount = 0;
+            $errors = [];
+            foreach ($r->all_device as $device) {
+                try {
+                    $origination = TdAssignDevice::create([
+                        "device_id" => $device['device_id'],
+                        "origination_id" => $r->organization_id,
+                        "create_by" => auth()->user()->id
+                    ]);
+                    $successCount++;
+                } catch (\Exception $e) {
+                    $errors[] = $e->getMessage();
+                }
+            }
+            if ($successCount == count($r->all_device)) {
+                return $this->sendResponse($origination, "All originations assigned successfully");
+            } else {
+                return $this->sendError("Some originations could not be assigned", $errors);
+            }
+        } catch (\Throwable $th) {
+            return $this->sendError("device data list", $th->getMessage());
+        }
+    }
+
     function edit_assign_origination(Request $r)
     {
         try {
