@@ -94,11 +94,12 @@ class DeviceDataController extends ResponceFormat
                 return $this->sendError("request validation error", $valaditor->errors(), 400);
             }
 
-            $device_data_list = DeviceData::join('td_assign_device as a', 'td_device_data.device_name', '=', 'a.device_id')
-            ->join('md_device as b', 'td_device_data.device_name', '=', 'b.device_id')
-            ->where('a.origination_id', '=', auth()->user()->origination_id)
-            ->where('td_device_data.device_id', '=', $r->device_id)
-            ->orderBy('td_device_data.data_id', 'desc')->first();
+            $device_data_list = DeviceData::select('td_device_data.*')
+            ->join('md_device AS b', 'b.device_name', '=', 'td_device_data.device_id')
+            ->join('td_assign_device AS a', 'b.device_id', '=', 'a.device_id')
+            ->where('a.origination_id', auth()->user()->origination_id)
+            ->where('td_device_data.device_id', $r->device_id)
+            ->orderBy('td_device_data.data_id', 'DESC')->first();
             // $chart=DeviceData::where("device_id",$r->device_id)->orderBy("device_id","desc")->orderBy("data_id", "desc")
 
 //             "select td_device_data.*
@@ -112,11 +113,12 @@ class DeviceDataController extends ResponceFormat
 
 
 
-            $chart=DeviceData::join('td_assign_device as a', 'td_device_data.device_name', '=', 'a.device_id')
-            ->join('md_device as b', 'td_device_data.device_name', '=', 'b.device_id')
-            ->where('a.origination_id', '=', auth()->user()->origination_id)
-            ->where('td_device_data.device_id', '=', $r->device_id)
-            ->orderBy('td_device_data.data_id', 'desc')
+            $chart=DeviceData::select('td_device_data.*')
+            ->join('md_device AS b', 'b.device_name', '=', 'td_device_data.device_id')
+            ->join('td_assign_device AS a', 'b.device_id', '=', 'a.device_id')
+            ->where('a.origination_id', auth()->user()->origination_id)
+            ->where('td_device_data.device_id', $r->device_id)
+            ->orderBy('td_device_data.data_id', 'DESC')
             ->take(5)->get();
             $data=[
                 "device_data_list"=>$device_data_list,
