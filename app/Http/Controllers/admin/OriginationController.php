@@ -178,7 +178,7 @@ class OriginationController extends ResponceFormat
 
     function list_origination_to_device(Request $r)
     {
-        return "zd df";
+        return "zddf";
         // try {
             $origination = MdOrigination::get();
             $assignDevices =  $origination->assign_devices()->with('device')->get();
