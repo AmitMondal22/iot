@@ -17,6 +17,6 @@ class TdAssignDevice extends Model
 
     public function device()
     {
-        return $this->belongsTo(MdDevice::class, 'device_id', 'device_id');
+        return $this->belongsTo(MdDevice::class, 'device_id', 'device_id')->orderBy('device_name');
     }
 }
