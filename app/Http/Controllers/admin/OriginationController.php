@@ -134,6 +134,7 @@ class OriginationController extends ResponceFormat
             // } else {
             //     return $this->sendError("Some originations could not be assigned", $errors);
             // }
+            return $this->sendResponse($origination, "All originations assigned successfully");
         } catch (\Throwable $th) {
             return $this->sendError("device data list", $th->getMessage());
         }
