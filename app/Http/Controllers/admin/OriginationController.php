@@ -129,11 +129,11 @@ class OriginationController extends ResponceFormat
                     $errors[] = $e->getMessage();
                 }
             }
-            if ($successCount == count($r->all_device)) {
-                return $this->sendResponse($origination, "All originations assigned successfully");
-            } else {
-                return $this->sendError("Some originations could not be assigned", $errors);
-            }
+            // if ($successCount == count($r->all_device)) {
+            //     return $this->sendResponse($origination, "All originations assigned successfully");
+            // } else {
+            //     return $this->sendError("Some originations could not be assigned", $errors);
+            // }
         } catch (\Throwable $th) {
             return $this->sendError("device data list", $th->getMessage());
         }
