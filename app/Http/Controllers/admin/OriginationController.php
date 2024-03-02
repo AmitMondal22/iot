@@ -86,7 +86,8 @@ class OriginationController extends ResponceFormat
         try {
             $rules = [
                 'origination_id' => 'required',
-                'device_id' => 'required'
+                'device_id' => 'required',
+                'user_id'=>'required'
             ];
             $valaditor = Validator::make($r->all(), $rules);
             if ($valaditor->fails()) {
@@ -96,6 +97,7 @@ class OriginationController extends ResponceFormat
             $origination = TdAssignDevice::create([
                 "device_id" => $r->device_id,
                 "origination_id" => $r->origination_id,
+                "assign_user_id"=>$r->user_id,
                 "create_by" => auth()->user()->id
             ]);
             return $this->sendResponse($origination, "origination assigned");
@@ -109,7 +111,8 @@ class OriginationController extends ResponceFormat
         try {
             $rules = [
                 'organization_id' => 'required',
-                'all_device' => 'required'
+                'all_device' => 'required',
+                'user_id'=>'required'
             ];
             $valaditor = Validator::make($r->all(), $rules);
             if ($valaditor->fails()) {
@@ -122,6 +125,7 @@ class OriginationController extends ResponceFormat
                     $origination = TdAssignDevice::create([
                         "device_id" => $device['device_id'],
                         "origination_id" => $r->organization_id,
+                        "assign_user_id"=>$r->user_id,
                         "create_by" => auth()->user()->id
                     ]);
                     $successCount++;
@@ -146,7 +150,8 @@ class OriginationController extends ResponceFormat
             $rules = [
                 'assign_device_id' => 'required',
                 'origination_id' => 'required',
-                'device_id' => 'required'
+                'device_id' => 'required',
+                'user_id'=>'required'
             ];
             $valaditor = Validator::make($r->all(), $rules);
             if ($valaditor->fails()) {
@@ -156,6 +161,7 @@ class OriginationController extends ResponceFormat
             $origination = TdAssignDevice::where("assign_device_id", $r->assign_device_id)->update([
                 "device_id" => $r->device_id,
                 "origination_id" => $r->origination_id,
+                "assign_user_id"=>$r->user_id,
                 "create_by" => auth()->user()->id
             ]);
             return $this->sendResponse($origination, "origination updated");
@@ -168,7 +174,10 @@ class OriginationController extends ResponceFormat
     function list_assign_origination(Request $r)
     {
         try {
-            $origination = TdAssignDevice::join("md_device as a", 'td_assign_device.device_id', '=', 'a.device_id')->join("md_origination as b", 'td_assign_device.origination_id', '=', 'b.origination_id')->select("td_assign_device.*", "a.device_name", "b.origination_name")->get();
+            $origination = TdAssignDevice::join("md_device as a", 'td_assign_device.device_id', '=', 'a.device_id')
+                                            ->join("md_origination as b", 'td_assign_device.origination_id', '=', 'b.origination_id')
+                                            ->join("users as c", 'td_assign_device.assign_user_id', '=', 'c.id')
+                                            ->select("td_assign_device.*", "a.device_name", "b.origination_name","c.*")->get();
             return $this->sendResponse($origination, "origination list");
         } catch (\Throwable $th) {
             return $this->sendError("device data list", $th->getMessage());

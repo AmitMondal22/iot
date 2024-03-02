@@ -63,6 +63,7 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
     });
 
     Route::prefix('assign-device')->group(function () {
+        ///
         Route::post('/add-origination', [OriginationController::class, 'assign_origination']);
         Route::post('/add-multiple-origination', [OriginationController::class, 'assign_multiple_origination']);
 

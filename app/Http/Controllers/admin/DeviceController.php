@@ -21,7 +21,7 @@ class DeviceController extends ResponceFormat
 
     public function device_list_user(){
         try {
-            $device_list = MdDevice::join("td_assign_device as a","md_device.device_id","=","a.device_id")->where("a.origination_id",auth()->user()->origination_id)->get();
+            $device_list = MdDevice::join("td_assign_device as a","md_device.device_id","=","a.device_id")->where("a.origination_id",auth()->user()->origination_id)->where("a.assign_user_id",auth()->user()->id)->get();
             return $this->sendResponse($device_list, "device list");
         } catch (\Throwable $th) {
             return $this->sendError("device list", $th->getMessage());

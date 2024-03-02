@@ -11,7 +11,7 @@ class TdAssignDevice extends Model
 
     protected $table = 'td_assign_device';
     protected $primaryKey = 'assign_device_id';
-    protected $fillable = [  "device_id", "origination_id", "create_by"];
+    protected $fillable = [  "device_id", "origination_id","assign_user_id", "create_by"];
 
 
 
