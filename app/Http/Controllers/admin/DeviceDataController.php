@@ -103,13 +103,13 @@ class DeviceDataController extends ResponceFormat
             ->orderBy('td_device_data.data_id', 'DESC')->first();
             // $chart=DeviceData::where("device_id",$r->device_id)->orderBy("device_id","desc")->orderBy("data_id", "desc")
 
-//             "select td_device_data.*
-// from td_device_data
-// inner join md_device as b on td_device_data.device_name = a.device_id
-// inner join td_assign_device as a on a.device_id = b.device_id
-// where a.origination_id = 2
-// and td_device_data.device_id = 'ABCDE01001'
-// order by td_device_data.data_id desc limit 1"
+            //             "select td_device_data.*
+            // from td_device_data
+            // inner join md_device as b on td_device_data.device_name = a.device_id
+            // inner join td_assign_device as a on a.device_id = b.device_id
+            // where a.origination_id = 2
+            // and td_device_data.device_id = 'ABCDE01001'
+            // order by td_device_data.data_id desc limit 1"
 
 
 

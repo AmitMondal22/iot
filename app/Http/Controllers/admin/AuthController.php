@@ -111,6 +111,17 @@ class AuthController extends ResponceFormat
         }
     }
 
+
+    function list_user_organization(Request $r): JsonResponse
+    {
+        try {
+            $user = User::where("origination_id", $r->organization_id)->get();
+            return $this->sendResponse($user, "user list");
+        } catch (\Throwable $th) {
+            return $this->sendError("user list", $th->getMessage());
+        }
+    }
+
     function login(Request $r): JsonResponse
     {
         try {
