@@ -51,7 +51,7 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
         Route::post('/list', [DeviceDataController::class, 'device_data_list']);
         Route::post('/last', [DeviceDataController::class, 'last_device_data']);
     });
-    Route::prefix('master')->group(function () {
+    Route::prefix('/master')->group(function () {
         Route::post('/add-origination', [OriginationController::class, 'add_origination']);
         Route::post('/edit-origination', [OriginationController::class, 'edit_origination']);
         Route::post('/delete-origination', [OriginationController::class, 'delete_origination']);
@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
 
 
         Route::get('/list-organization-user', [AuthController::class, 'list_user_organization']);
+
 
         Route::post('/add-user', [AuthController::class, 'add_user']);
         Route::post('/edit-user', [AuthController::class, 'edit_user']);
@@ -68,17 +69,14 @@ Route::middleware(['auth:sanctum', 'user-access:0'])->group(function () {
     Route::prefix('assign-device')->group(function () {
         ///
         Route::post('/add-origination', [OriginationController::class, 'assign_origination']);
+
         Route::post('/add-multiple-origination', [OriginationController::class, 'assign_multiple_origination']);
 
         Route::post('/edit-origination', [OriginationController::class, 'edit_assign_origination']);
 
         Route::get('/list-origination', [OriginationController::class, 'list_assign_origination']);
 
-
-
         Route::get('/list-origination-to-device', [OriginationController::class, 'list_origination_to_device']);
-
-
 
     });
 });

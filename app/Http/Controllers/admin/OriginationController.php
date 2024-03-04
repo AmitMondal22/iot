@@ -192,8 +192,7 @@ class OriginationController extends ResponceFormat
         try {
             // $origination = MdOrigination::get();
             // $assignDevices =  $origination->assign_devices()->with('device')->get();
-
-            $originations = MdOrigination::with('assign_devices.device')->get();
+            $originations = MdOrigination::join("users as a","a.origination_id","=","md_origination.origination_id")->with('assign_devices.device')->get();
             return $this->sendResponse($originations, "origination list");
             // return $this->sendResponse($assignDevices, "origination list");
         } catch (\Throwable $th) {
