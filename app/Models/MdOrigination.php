@@ -15,6 +15,8 @@ class MdOrigination extends Model
 
     public function assign_devices()
     {
-        return $this->hasMany(TdAssignDevice::class, 'origination_id', 'origination_id');
+        return $this->hasMany(TdAssignDevice::class, 'origination_id', 'origination_id')
+                ->where("assign_user_id", auth()->user()->id)
+                ->get();
     }
 }
