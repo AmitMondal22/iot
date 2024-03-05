@@ -17,7 +17,7 @@ class MdOrigination extends Model
     {
         return $this->hasMany(TdAssignDevice::class, 'origination_id', 'origination_id')
             ->join("users as a","a.id","=","td_assign_device.assign_user_id")
-            ->select('td_assign_devices.*', 'another_table.*')
+            ->select('td_assign_device.*', 'users.*')
             ->get();
     }
 }
