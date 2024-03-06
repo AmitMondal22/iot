@@ -7,6 +7,7 @@ use App\Http\Controllers\ResponceFormat;
 use App\Models\DeviceData;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class DeviceDataController extends ResponceFormat
@@ -75,27 +76,25 @@ class DeviceDataController extends ResponceFormat
 
 
 
-            $currentDateTime = new DateTime();
+            // Assuming $device_data_list->created_at is a Carbon instance
+$deviceCreatedAt = Carbon::parse($device_data_list->created_at);
 
-            // Subtract 1 hour from the current time
-            $currentDateTime->modify('-1 hour');
+// Get the current time and subtract 1 hour
+$currentDateTime = Carbon::now()->subHour();
 
-            // Format the modified time
-            $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
-
-            if($formattedDateTime<date('Y-m-d H:i:s',$device_data_list->created_at)){
-                $device_status="Online";
-            }else{
-                $device_status="Offline";
-            }
-
+// Compare the modified time with the device created time
+if ($currentDateTime < $deviceCreatedAt) {
+    $device_status = "Online";
+} else {
+    $device_status = "Offline";
+}
 
             $data=[
                 "device_data_list"=>$device_data_list,
                 "chart_data_list"=>$chart,
                 "device_status"=>$device_status,
-                "formattedDateTime"=>$formattedDateTime,
-                "created_at"=>date('Y-m-d H:i:s',$device_data_list->created_at)
+                "formattedDateTime"=>$currentDateTime,
+                "created_at"=>$deviceCreatedAt
             ];
             return $this->sendResponse($data, "last device data");
         } catch (\Throwable $th) {
