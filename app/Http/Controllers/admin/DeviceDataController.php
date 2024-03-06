@@ -83,7 +83,7 @@ class DeviceDataController extends ResponceFormat
             // Format the modified time
             $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
 
-            if($formattedDateTime<$device_data_list->created_atv){
+            if($formattedDateTime<$device_data_list->created_at){
                 $device_status="Online";
             }else{
                 $device_status="Offline";
@@ -93,7 +93,9 @@ class DeviceDataController extends ResponceFormat
             $data=[
                 "device_data_list"=>$device_data_list,
                 "chart_data_list"=>$chart,
-                "device_status"=>$device_status
+                "device_status"=>$device_status,
+                "formattedDateTime"=>$formattedDateTime,
+                "created_at"=>$device_data_list->created_at
             ];
             return $this->sendResponse($data, "last device data");
         } catch (\Throwable $th) {
