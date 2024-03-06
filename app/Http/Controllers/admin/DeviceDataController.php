@@ -85,7 +85,7 @@ class DeviceDataController extends ResponceFormat
 
 
             if(!empty($device_data_list->created_at)){
-                $createdDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $device_data_list->created_at);
+                $createdDateTime = $device_data_list->created_at->format('Y-m-d H:i:s');
             }else{
                 $createdDateTime = '';
             }
