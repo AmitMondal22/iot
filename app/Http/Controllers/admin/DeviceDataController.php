@@ -139,9 +139,6 @@ class DeviceDataController extends ResponceFormat
             }else{
                 $device_status="Offline";
             }
-
-
-
             $data=[
                 "device_data_list"=>$device_data_list,
                 "chart_data_list"=>$chart,
