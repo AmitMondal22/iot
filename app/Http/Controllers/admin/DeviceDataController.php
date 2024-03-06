@@ -84,7 +84,13 @@ class DeviceDataController extends ResponceFormat
             $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
 
 
-            $createdDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $device_data_list->created_at);
+            if(!empty($device_data_list->created_at)){
+                $createdDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $device_data_list->created_at);
+            }else{
+                $createdDateTime = '';
+            }
+
+
 
             if($formattedDateTime < $createdDateTime){
                 $device_status="Online";
