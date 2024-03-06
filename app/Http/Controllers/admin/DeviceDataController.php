@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponceFormat;
 use App\Models\DeviceData;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -122,9 +123,29 @@ class DeviceDataController extends ResponceFormat
             ->where("a.assign_user_id",auth()->user()->id)
             ->orderBy('td_device_data.data_id', 'DESC')
             ->take(5)->get();
+
+
+
+            $currentDateTime = new DateTime();
+
+            // Subtract 1 hour from the current time
+            $currentDateTime->modify('-1 hour');
+
+            // Format the modified time
+            $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
+
+            if($formattedDateTime<$device_data_list->created_atv){
+                $device_status="Online";
+            }else{
+                $device_status="Offline";
+            }
+
+
+
             $data=[
                 "device_data_list"=>$device_data_list,
-                "chart_data_list"=>$chart
+                "chart_data_list"=>$chart,
+                "device_status"=>$device_status
             ];
             return $this->sendResponse($data, "last device data");
         } catch (\Throwable $th) {
