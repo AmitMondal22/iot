@@ -48,7 +48,7 @@ class DeviceDataController extends ResponceFormat
                     "rpm" => $r->rpm,
                     "flow" => $flow,
                 ];
-                // Log::info(print_r($devicedata_to_device, true));
+                Log::info(print_r($devicedata_to_device, true));
             $add_device_data = DeviceData::create($devicedata_to_device);
             return $this->sendResponse($add_device_data, "add device data");
         } catch (\Throwable $th) {
