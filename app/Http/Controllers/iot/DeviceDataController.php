@@ -42,7 +42,7 @@ class DeviceDataController extends ResponceFormat
                     "date" => date("Y-m-d"),
                     "time" => $r->run_hours,
                     "dc_bus_voltage" => $r->dc_bus_voltage,
-                    "output_current" => $r->output_current,
+                    "output_current" => round($r->output_current/10,2),
                     "settings_freq" => $r->settings_freq,
                     "running_freq" => $r->running_freq,
                     "rpm" => $r->rpm,
