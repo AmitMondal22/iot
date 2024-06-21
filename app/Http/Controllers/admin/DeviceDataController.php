@@ -164,11 +164,28 @@ class DeviceDataController extends ResponceFormat
             // Format the modified time
             $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
 
-            if($formattedDateTime<$device_data_list->created_atv){
+            // if($formattedDateTime<$device_data_list->created_at){
+            //     $device_status="Online";
+            // }else{
+            //     $device_status="Offline";
+            // }
+
+
+            if(!empty($device_data_list->created_at)){
+                $createdDateTime = $device_data_list->created_at->format('Y-m-d H:i:s');
+            }else{
+                $createdDateTime = '';
+            }
+
+
+
+            if($formattedDateTime < $createdDateTime){
                 $device_status="Online";
             }else{
                 $device_status="Offline";
             }
+
+
 
 
 
