@@ -50,7 +50,7 @@ class DeviceDataController extends ResponceFormat
             $fdate=$r->start_date_time;
             $tdate=$r->end_date_time;
 
-            $device_data_list = DeviceData::join("td_assign_device as a","md_device.device_id","=","a.device_id")->where("a.origination_id",auth()->user()->origination_id)->where("md_device.device_id",$r->device_id)->where("a.assign_user_id",auth()->user()->id)->whereBetween("md_device.date",[$fdate,$tdate])->orderBy("md_device.data_id","DESC")->select('md_device.*')->get();
+            $device_data_list = DeviceData::join("td_assign_device as a","td_device_data.device_id","=","a.device_id")->where("a.origination_id",auth()->user()->origination_id)->where("td_device_data.device_id",$r->device_id)->where("a.assign_user_id",auth()->user()->id)->whereBetween("td_device_data.date",[$fdate,$tdate])->orderBy("td_device_data.data_id","DESC")->select('td_device_data.*')->get();
             return $this->sendResponse($device_data_list, "device data list");
         } catch (\Throwable $th) {
             return $this->sendError("device data list", $th->getMessage());
